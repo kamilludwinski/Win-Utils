@@ -1,0 +1,299 @@
+{
+    "gitHubRepository": "kamilludwinski/WinUtils",
+    "hotKey": {
+      "modifiers": 2,
+      "virtualKey": 87
+    },
+    "excludedApps": [
+      {
+        "name": "backgroundTaskHost",
+        "description": "Background task host"
+      },
+      {
+        "name": "CHXSmartScreen",
+        "description": "CHX SmartScreen"
+      },
+      {
+        "name": "Whatsapp.Root",
+        "description": "WhatsApp"
+      },
+      {
+        "name": "ctfmon",
+        "description": "Text input host"
+      },
+      {
+        "name": "Idle",
+        "description": "Idle process"
+      },
+      {
+        "name": "Lsalso",
+        "description": "LSA Isolated process (Credential Guard / isolated logon)"
+      },
+      {
+        "name": "winlogon",
+        "description": "Windows logon process"
+      },
+      {
+        "name":"UserOOBEBroker",
+        "description": "User OOBE Broker"
+      },
+      {
+        "name": "CrossDeviceResume",
+        "description": "Phone Link / cross-device resume (name as shown in Task Manager)"
+      },
+      {
+        "name": "SearchHost",
+        "description": "Windows Search UI host (search box / search experience)"
+      },
+      {
+        "name": "RuntimeBroker",
+        "description": "UWP / Store app permission broker (runs alongside sandboxed apps)"
+      },
+      {
+        "name": "ShellExperienceHost",
+        "description": "Shell experience host (Action Center, notifications shell UI)"
+      },
+      {
+        "name": "AggregatorHost",
+        "description": "Windows feature aggregation host"
+      },
+      {
+        "name": "AppActions",
+        "description": "App Actions / quick actions host"
+      },
+      {
+        "name": "ApplicationFrameHost",
+        "description": "Hosts UWP / modern app windows in a frame"
+      },
+      {
+        "name": "WUDFHost",
+        "description": "Windows User-Mode Driver Framework host"
+      },
+      {
+        "name": "wslservice",
+        "description": "WSL 2 service (Linux subsystem)"
+      },
+      {
+        "name": "wslrelay",
+        "description": "WSL network / relay helper"
+      },
+      {
+        "name": "wslhost",
+        "description": "WSL virtual machine / utility VM host process"
+      },
+      {
+        "name": "WidgetService",
+        "description": "Windows Widgets background service"
+      },
+      {
+        "name": "VBCSCompiler",
+        "description": "Roslyn VB/C# compiler server (builds in IDE / dotnet)"
+      },
+      {
+        "name": "System",
+        "description": "System process (kernel / idle placeholder PID 4 on some views)"
+      },
+      {
+        "name": "svchost",
+        "description": "Generic host for Windows services (many instances)"
+      },
+      {
+        "name": "StartMenuExperienceHost",
+        "description": "Start menu and related shell UI"
+      },
+      {
+        "name": "spoolsv",
+        "description": "Print spooler service"
+      },
+      {
+        "name": "ShellHost",
+        "description": "Shell host (various shell tasks)"
+      },
+      {
+        "name": "SecurityHealthService",
+        "description": "Windows Security (Defender) core service"
+      },
+      {
+        "name": "SecurityHealthSystray",
+        "description": "Windows Security tray / notification area"
+      },
+      {
+        "name": "SearchIndexer",
+        "description": "Windows Search indexing service"
+      },
+      {
+        "name": "msedge",
+        "description": "Microsoft Edge browser"
+      },
+      {
+        "name": "Memory Compression",
+        "description": "RAM compression (SuperFetch-related system worker)"
+      },
+      {
+        "name": "dotnet",
+        "description": ".NET runtime / host processes (dotnet CLI"
+      },
+      {
+        "name": "docker-agent",
+        "description": "Docker Desktop agent"
+      },
+      {
+        "name": "docker-sandbox",
+        "description": "Docker Desktop sandbox helper"
+      },
+      {
+        "name": "Docker Desktop",
+        "description": "Docker Desktop main UI / orchestration"
+      },
+      {
+        "name": "atieclxx",
+        "description": "AMD GPU user-mode component"
+      },
+      {
+        "name": "atiesrxx",
+        "description": "AMD GPU driver / service process"
+      },
+      {
+        "name": "audiodg",
+        "description": "Windows Audio Device Graph Isolation (audio engine)"
+      },
+      {
+        "name": "com.docker.backend",
+        "description": "Docker Desktop backend (VM / engine bridge)"
+      },
+      {
+        "name": "com.docker.build",
+        "description": "Docker build / buildkit related"
+      },
+      {
+        "name": "conhost",
+        "description": "Console window host (child consoles)"
+      },
+      {
+        "name": "CorssDeviceResumectfmon",
+        "description": "Phone Link / cross-device + text input related host"
+      },
+      {
+        "name": "dllhost",
+        "description": "COM surrogate (loads DLLs for Explorer / thumbnails)"
+      },
+      {
+        "name": "dwm",
+        "description": "Desktop Window Manager (Aero / composition)"
+      },
+      {
+        "name": "explorer",
+        "description": "Windows shell (taskbar"
+      },
+      {
+        "name": "FileCoAuth",
+        "description": "Microsoft 365 / OneDrive file collaboration co-authoring"
+      },
+      {
+        "name": "fontdrvhost",
+        "description": "User-mode font driver host"
+      },
+      {
+        "name": "Lsalso",
+        "description": "LSA Isolated process (Credential Guard / isolated logon)"
+      },
+      {
+        "name": "Isass",
+        "description": "Local Security Authority (authentication / logon) — name as listed on some systems"
+      },
+      {
+        "name": "Microsoft.CodeAnalysis.LanguageServer",
+        "description": "Roslyn / C# language server (VS / VS Code)"
+      },
+      {
+        "name": "MidiSrv",
+        "description": "Windows MIDI service"
+      },
+      {
+        "name": "MoNotificationUx",
+        "description": "Modern setup / notification UX (feature updates)"
+      },
+      {
+        "name": "msedgewebview2",
+        "description": "Edge WebView2 embedded browser runtime (many apps use it)"
+      },
+      {
+        "name": "MsMpEng",
+        "description": "Windows Defender antimalware engine"
+      },
+      {
+        "name": "Ngclso",
+        "description": "Windows Hello / security key isolation (name as shown in some builds)"
+      },
+      {
+        "name": "Registry",
+        "description": "System registry (kernel-visible name in some listings)"
+      },
+      {
+        "name": "Secure System",
+        "description": "Secure kernel / VBS related system process"
+      },
+      {
+        "name": "Widgets",
+        "description": "Windows Widgets"
+      },
+      {
+        "name": "wsl",
+        "description": "Windows Subsystem for Linux (utility / broker)"
+      }
+    ],
+    "excludedPorts": [
+      {
+        "name": "(system)",
+        "description": "Pseudo-name for kernel/system listeners (shown as \"(system)\" in some tools)"
+      },
+      {
+        "name": "com.docker.backend",
+        "description": "Docker Desktop backend — often holds many forwarded ports"
+      },
+      {
+        "name": "dotnet",
+        "description": ".NET apps and dotnet CLI — development servers bind many ports"
+      },
+      {
+        "name": "Isass",
+        "description": "Local Security Authority — system authentication (rarely user-kill)"
+      },
+      {
+        "name": "msedge",
+        "description": "Microsoft Edge — many ephemeral ports for tabs / updates"
+      },
+      {
+        "name": "msedgewebview2",
+        "description": "Edge WebView2 — embedded web content in many apps"
+      },
+      {
+        "name": "MsMpEng",
+        "description": "Windows Defender — network inspection / filtering stack"
+      },
+      {
+        "name": "spoolsv",
+        "description": "Print spooler — printer sharing and spooler ports"
+      },
+      {
+        "name": "services",
+        "description": "Service Control Manager — hosts many Windows services"
+      },
+      {
+        "name": "svchost",
+        "description": "Service host — generic Windows service processes (many PIDs)"
+      },
+      {
+        "name": "wininit",
+        "description": "Early boot / session manager related (critical system)"
+      },
+      {
+        "name": "wslrelay",
+        "description": "WSL networking relay — forwarded ports from Linux"
+      },
+      {
+        "name": "System",
+        "description": "System / kernel — PID 4 and core listeners"
+      }
+    ]
+  }

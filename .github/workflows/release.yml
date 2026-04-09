@@ -1,0 +1,64 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Version from tag
+        id: ver
+        shell: pwsh
+        run: |
+          $ref = "${{ github.ref_name }}"
+          $v = $ref -replace '^[vV]', ''
+          "semver=$v" >> $env:GITHUB_OUTPUT
+
+      - name: Publish WinUtil (single-file exe)
+        shell: pwsh
+        run: |
+          $v = "${{ steps.ver.outputs.semver }}"
+          $repo = '${{ github.repository }}'
+          dotnet publish "src/WinUtil/WinUtil.csproj" `
+            -c Release `
+            -r win-x64 `
+            --self-contained true `
+            -p:PublishSingleFile=true `
+            -p:IncludeNativeLibrariesForSelfExtract=true `
+            "-p:GitHubRepository=$repo" `
+            -p:Version=$v `
+            -p:AssemblyVersion=$v `
+            -p:FileVersion=$v `
+            -p:InformationalVersion=$v `
+            -o "$env:GITHUB_WORKSPACE/publish"
+
+      - name: Install Inno Setup
+        shell: pwsh
+        run: choco install innosetup -y --no-progress
+
+      - name: Build installer (Program Files\WinUtil)
+        shell: pwsh
+        run: |
+          $publish = "$env:GITHUB_WORKSPACE/publish"
+          $ver = "${{ steps.ver.outputs.semver }}"
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          & $iscc "installer\WinUtil.iss" "/DPublishDir=$publish" "/DMyAppVersion=$ver"
+
+      - name: Upload release asset (installer only)
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/WinUtilSetup.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,353 @@
+<Window x:Class="WinUtil.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:WinUtil.ViewModels"
+        mc:Ignorable="d"
+        Title="WinUtil"
+        Height="580"
+        Width="940"
+        MinHeight="420"
+        MinWidth="680"
+        WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
+    <Border Padding="16" Background="{DynamicResource WindowBrush}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0"
+                  Margin="0,0,0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           Text="WinUtil"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           VerticalAlignment="Center"
+                           Foreground="{DynamicResource TextBrush}" />
+                <Border Grid.Column="1"
+                        Margin="16,0,12,0"
+                        Padding="12,8"
+                        CornerRadius="8"
+                        VerticalAlignment="Center"
+                        Background="{DynamicResource SurfaceBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}"
+                        BorderThickness="1">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding VersionStatusText}"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource MutedTextBrush}" />
+                    </StackPanel>
+                </Border>
+                <TextBlock Grid.Column="2"
+                           VerticalAlignment="Center"
+                           Margin="0,0,12,0">
+                    <Hyperlink Command="{Binding OpenReleaseNotesCommand}">
+                        Release notes
+                    </Hyperlink>
+                </TextBlock>
+                <Button Grid.Column="3"
+                        Content="Update"
+                        Padding="12,6"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource ToolbarButton}"
+                        Command="{Binding OpenUpdateDownloadCommand}"
+                        Visibility="{Binding ShowUpdateDownloadButton, Converter={StaticResource BoolToVisibility}}" />
+            </Grid>
+            <Border Grid.Row="1"
+                    Background="{DynamicResource SurfaceBrush}"
+                    BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="16">
+                <TabControl x:Name="MainTabs"
+                            SelectionChanged="MainTabs_OnSelectionChanged">
+                    <TabItem Header="Processes">
+                        <DockPanel Margin="0,8,0,0" LastChildFill="True">
+                            <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                    <TextBlock Text="App name"
+                                               Width="88"
+                                               VerticalAlignment="Center"
+                                               Foreground="{DynamicResource MutedTextBrush}" />
+                                    <Grid Width="220" MinHeight="32">
+                                        <Border Background="{DynamicResource SurfaceBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="4">
+                                            <Grid>
+                                                <TextBox Style="{StaticResource SearchFilterInnerTextBox}"
+                                                         Text="{Binding ProcessAppNameFilter, UpdateSourceTrigger=PropertyChanged}" />
+                                                <Button Style="{StaticResource SearchClearButton}"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center"
+                                                        Height="28"
+                                                        Margin="0,0,2,0"
+                                                        Command="{Binding ClearProcessAppNameFilterCommand}"
+                                                        ToolTip="Clear"
+                                                        Visibility="{Binding ProcessAppNameFilter, Converter={StaticResource StringNotEmptyToVisibility}}">
+                                                    <TextBlock FontFamily="Segoe MDL2 Assets"
+                                                               Text="&#xE711;"
+                                                               FontSize="11"
+                                                               Foreground="{DynamicResource MutedTextBrush}"
+                                                               VerticalAlignment="Center" />
+                                                </Button>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                    <TextBlock Text="PID"
+                                               Width="88"
+                                               VerticalAlignment="Center"
+                                               Foreground="{DynamicResource MutedTextBrush}" />
+                                    <Grid Width="220" MinHeight="32">
+                                        <Border Background="{DynamicResource SurfaceBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="4">
+                                            <Grid>
+                                                <TextBox Style="{StaticResource SearchFilterInnerTextBox}"
+                                                         Text="{Binding PidFilter, UpdateSourceTrigger=PropertyChanged}" />
+                                                <Button Style="{StaticResource SearchClearButton}"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center"
+                                                        Height="28"
+                                                        Margin="0,0,2,0"
+                                                        Command="{Binding ClearPidFilterCommand}"
+                                                        ToolTip="Clear"
+                                                        Visibility="{Binding PidFilter, Converter={StaticResource StringNotEmptyToVisibility}}">
+                                                    <TextBlock FontFamily="Segoe MDL2 Assets"
+                                                               Text="&#xE711;"
+                                                               FontSize="11"
+                                                               Foreground="{DynamicResource MutedTextBrush}"
+                                                               VerticalAlignment="Center" />
+                                                </Button>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </StackPanel>
+                            </StackPanel>
+                            <DataGrid ItemsSource="{Binding ProcessRows}"
+                                      SelectedItem="{Binding SelectedProcess}"
+                                      AutoGenerateColumns="False"
+                                      IsReadOnly="True"
+                                      CanUserAddRows="False"
+                                      CanUserDeleteRows="False"
+                                      SelectionMode="Single"
+                                      Margin="0,8,0,0"
+                                      ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="App name" Binding="{Binding Name}" Width="*" />
+                                    <DataGridTextColumn Header="PIDs" Binding="{Binding PidsDisplay}" Width="2*" />
+                                    <DataGridTemplateColumn Header="" Width="64" MinWidth="64">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Style="{StaticResource IconToolbarButton}"
+                                                        Command="{Binding DataContext.KillProcessCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                        CommandParameter="{Binding}">
+                                                    <Button.ToolTip>
+                                                        <ToolTip>
+                                                            <TextBlock MaxWidth="280"
+                                                                       TextWrapping="Wrap"
+                                                                       Text="End this app: kills every process with this name (full process tree). Requires permission for protected processes." />
+                                                        </ToolTip>
+                                                    </Button.ToolTip>
+                                                    <TextBlock FontFamily="Segoe MDL2 Assets"
+                                                               Text="&#xE74D;"
+                                                               FontSize="15"
+                                                               Foreground="{DynamicResource DangerBrush}"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center" />
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+                    </TabItem>
+                    <TabItem Header="Ports">
+                        <DockPanel Margin="0,8,0,0" LastChildFill="True">
+                            <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                    <TextBlock Text="Port"
+                                               Width="88"
+                                               VerticalAlignment="Center"
+                                               Foreground="{DynamicResource MutedTextBrush}" />
+                                    <Grid Width="220" MinHeight="32">
+                                        <Border Background="{DynamicResource SurfaceBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="4">
+                                            <Grid>
+                                                <TextBox Style="{StaticResource SearchFilterInnerTextBox}"
+                                                         Text="{Binding PortFilter, UpdateSourceTrigger=PropertyChanged}" />
+                                                <Button Style="{StaticResource SearchClearButton}"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center"
+                                                        Height="28"
+                                                        Margin="0,0,2,0"
+                                                        Command="{Binding ClearPortFilterCommand}"
+                                                        ToolTip="Clear"
+                                                        Visibility="{Binding PortFilter, Converter={StaticResource StringNotEmptyToVisibility}}">
+                                                    <TextBlock FontFamily="Segoe MDL2 Assets"
+                                                               Text="&#xE711;"
+                                                               FontSize="11"
+                                                               Foreground="{DynamicResource MutedTextBrush}"
+                                                               VerticalAlignment="Center" />
+                                                </Button>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                    <TextBlock Text="App name"
+                                               Width="88"
+                                               VerticalAlignment="Center"
+                                               Foreground="{DynamicResource MutedTextBrush}" />
+                                    <Grid Width="220" MinHeight="32">
+                                        <Border Background="{DynamicResource SurfaceBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="4">
+                                            <Grid>
+                                                <TextBox Style="{StaticResource SearchFilterInnerTextBox}"
+                                                         Text="{Binding PortAppNameFilter, UpdateSourceTrigger=PropertyChanged}" />
+                                                <Button Style="{StaticResource SearchClearButton}"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center"
+                                                        Height="28"
+                                                        Margin="0,0,2,0"
+                                                        Command="{Binding ClearPortAppNameFilterCommand}"
+                                                        ToolTip="Clear"
+                                                        Visibility="{Binding PortAppNameFilter, Converter={StaticResource StringNotEmptyToVisibility}}">
+                                                    <TextBlock FontFamily="Segoe MDL2 Assets"
+                                                               Text="&#xE711;"
+                                                               FontSize="11"
+                                                               Foreground="{DynamicResource MutedTextBrush}"
+                                                               VerticalAlignment="Center" />
+                                                </Button>
+                                            </Grid>
+                                        </Border>
+                                    </Grid>
+                                </StackPanel>
+                            </StackPanel>
+                            <DataGrid ItemsSource="{Binding PortRows}"
+                                      SelectedItem="{Binding SelectedPort}"
+                                      AutoGenerateColumns="False"
+                                      IsReadOnly="True"
+                                      CanUserAddRows="False"
+                                      CanUserDeleteRows="False"
+                                      SelectionMode="Single"
+                                      Margin="0,8,0,0"
+                                      ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                      ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="App" Binding="{Binding AppName}" Width="*" />
+                                    <DataGridTextColumn Header="PID" Binding="{Binding Pid}" Width="80" />
+                                    <DataGridTextColumn Header="Port" Binding="{Binding Port}" Width="80" />
+                                    <DataGridTextColumn Header="Protocol" Binding="{Binding Protocol}" Width="80" />
+                                    <DataGridTextColumn Header="Local address" Binding="{Binding LocalAddress}" Width="2*" />
+                                    <DataGridTemplateColumn Header="" Width="64" MinWidth="64">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Style="{StaticResource IconToolbarButton}"
+                                                        Command="{Binding DataContext.KillPortProcessCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                        CommandParameter="{Binding}">
+                                                    <Button.ToolTip>
+                                                        <ToolTip>
+                                                            <TextBlock MaxWidth="280"
+                                                                       TextWrapping="Wrap"
+                                                                       Text="Kill the process that owns this port (entire process tree). May fail for system or protected processes." />
+                                                        </ToolTip>
+                                                    </Button.ToolTip>
+                                                    <TextBlock FontFamily="Segoe MDL2 Assets"
+                                                               Text="&#xE74D;"
+                                                               FontSize="15"
+                                                               Foreground="{DynamicResource DangerBrush}"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center" />
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+                    </TabItem>
+                    <TabItem Header="Settings">
+                        <StackPanel Margin="0,12,0,0">
+                            <TextBlock Text="App folder"
+                                       FontWeight="SemiBold"
+                                       Margin="0,0,0,8" />
+                            <TextBlock Foreground="{DynamicResource MutedTextBrush}"
+                                       TextWrapping="Wrap"
+                                       Margin="0,0,0,8"
+                                       Text="{Binding AppDirectoryPath, Mode=OneWay}" />
+                            <Button Content="Open app folder"
+                                    Style="{StaticResource ToolbarButton}"
+                                    Command="{Binding OpenAppDirectoryCommand}"
+                                    HorizontalAlignment="Left"
+                                    Margin="0,0,0,0" />
+
+                            <TextBlock Text="Excluded apps"
+                                       FontWeight="SemiBold"
+                                       Margin="0,24,0,8" />
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <TextBlock Foreground="{DynamicResource MutedTextBrush}"
+                                           Text="{Binding ExcludedAppsCount, Mode=OneWay}" />
+                                <TextBlock Foreground="{DynamicResource MutedTextBrush}"
+                                           Text=" app(s) excluded from the Processes list." />
+                            </StackPanel>
+                            <Button Content="Edit excluded apps"
+                                    Style="{StaticResource ToolbarButton}"
+                                    Command="{Binding EditExcludedAppsCommand}"
+                                    HorizontalAlignment="Left"
+                                    Margin="0,0,0,0" />
+
+                            <TextBlock Text="Excluded from ports"
+                                       FontWeight="SemiBold"
+                                       Margin="0,24,0,8" />
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                <TextBlock Foreground="{DynamicResource MutedTextBrush}"
+                                           Text="{Binding ExcludedPortsCount, Mode=OneWay}" />
+                                <TextBlock Foreground="{DynamicResource MutedTextBrush}"
+                                           Text=" app name(s) hidden on the Ports tab." />
+                            </StackPanel>
+                            <Button Content="Edit excluded ports"
+                                    Style="{StaticResource ToolbarButton}"
+                                    Command="{Binding EditExcludedPortsCommand}"
+                                    HorizontalAlignment="Left"
+                                    Margin="0,0,0,0" />
+
+                            <TextBlock Text="Global hotkey"
+                                       FontWeight="SemiBold"
+                                       Margin="0,24,0,8" />
+                            <TextBlock Foreground="{DynamicResource MutedTextBrush}"
+                                       TextWrapping="Wrap"
+                                       Margin="0,0,0,8"
+                                       Text="Press the shortcut you want (e.g. Ctrl+W). It is saved in settings.json (hotKey) when you click OK. Ctrl+W is the default." />
+                            <Button Content="Edit hotkey"
+                                    Style="{StaticResource ToolbarButton}"
+                                    Command="{Binding EditHotKeyConfigCommand}"
+                                    HorizontalAlignment="Left"
+                                    Margin="0,0,0,0" />
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+            </Border>
+        </Grid>
+    </Border>
+</Window>
